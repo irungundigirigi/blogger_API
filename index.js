@@ -2,6 +2,7 @@ const express = require ("express");
 const app = express();
 var mongoose = require("mongoose");
 var cors = require('cors')
+require('dotenv').config()
 const userrouter = require('./routes/userRoutes');
 
 app.use(cors({
@@ -13,7 +14,7 @@ app.use(express.json())
 
 const port = 3002
 //database connection
-const uri = "mongodb+srv://irungu_ndigirigi:Edwin1996@cluster0.iyopz.mongodb.net/authDB?retryWrites=true&w=majority"
+const uri = process.env.URI
 
  mongoose.connect(uri, {
     useNewUrlParser: true,
