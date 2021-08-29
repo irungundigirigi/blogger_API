@@ -25,7 +25,6 @@ const uri = process.env.URI
   })
   .catch(err => console.log(err))
 
-  var db = mongoose.connection;
 
   
 //router
