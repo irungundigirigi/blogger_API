@@ -28,7 +28,7 @@ const uri = process.env.URI
 
   
 //router
-app.use("/user", userrouter);
+app.use("/", userrouter);
 
 app.listen(port, () => {
     console.log(`App is listening at on port ${port}`)
