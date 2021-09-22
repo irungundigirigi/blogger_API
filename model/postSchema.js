@@ -3,19 +3,19 @@ const Schema = mongoose.Schema
 
 const postsSchema = new Schema ({
     post_image: {imageUrl: String},
-    postTitle: String,
-    postBody: String,
-    posted_on: Date,
+    title: String, //This is a shorthand for {type: String}
+    body: String,
+    date: Date,
     tags:[String],
     likes: [{
-        likedBy:String,
-        likedOn:Date
+        by:String,
+        date:Date
     }],
 
     comments: [{
-        commentedBy: String,
-        commentBody: String,
-        commentedOn: Date
+        by: String,
+        body: String,
+        date: Date
     }]
 
 

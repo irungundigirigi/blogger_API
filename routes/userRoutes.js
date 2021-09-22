@@ -1,11 +1,15 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const jwt_decode = require ("jwt-decode");
+
 const userCollection = require("../model/userModel");
 const jwt = require("jsonwebtoken");
 const { response } = require('express');
 const router = express.Router();
 const authorize = require('./authorize');
 const upload = require('./profile_upload');
+const { getMaxListeners } = require('../model/postSchema');
+
 
 
 
@@ -63,13 +67,28 @@ router.get('/test_authorize',authorize,(req,res) => {
 })
 
 //upload profile piprofile-piccture
-router.post("/upload-profile",upload.single('profile') , async(req,res) => {
+router.post("/upload-profile",upload.single('profile') ,authorize, async(req,res) => {
    
     //const path = req.file.path.replace(/\\/g, "/")
-    console.log(req.file.path)
-    const path = `http:localhost:3002/${req.file.path}`
-    res.send(path)
-   
+    const token =await req.cookies.access_token;
+    const payload = jwt_decode(token);
+    const email = payload.email
+    console.log(email)
+    const path = `http://localhost:3002/${req.file.path}`
+    const updatedUser = await userCollection.updateOne({"email":email}, 
+       {profile: path}
+    )
+    res.status(200).send(updatedUser)
+})
+//getactive user data
+router.get("/user",authorize, async(req,res) => {
+    
+    const token =await req.cookies.access_token;
+    const payload = jwt_decode(token);
+    const email = payload.email
+    const user = await userCollection.findOne({"email":email})
+    res.status(200).json(user)
 
 })
+
 module.exports = router

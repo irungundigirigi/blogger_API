@@ -14,6 +14,10 @@ const User = mongoose.Schema({
         type:String ,
         required: true
     },
+    profile : {
+        type:String ,
+        required: false
+    },
     posts: postsSchema
 }
 )
